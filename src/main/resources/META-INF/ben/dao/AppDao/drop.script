@@ -1,0 +1,3 @@
+-- drop sequence employee_seq;
+drop table item;
+drop table account;

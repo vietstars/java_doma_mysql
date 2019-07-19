@@ -1,0 +1,30 @@
+drop table if exists item;
+create table if not exists item (
+	id         int not null auto_increment,
+	name       varchar(255) not null,
+	price      int not null,
+	create_at  datetime,
+	update_at  datetime,
+	primary key(id)
+);
+drop table if exists account;
+create table if not exists account (
+	id         int not null auto_increment,
+	name       varchar(255) not null,
+	item_id    int not null,
+	item_count int not null,
+	create_at  datetime,
+	update_at  datetime,
+	primary key(id)
+);
+
+insert into item(id, name, price, create_at, update_at) values 
+	(1, 'apple' , 120, current_timestamp, current_timestamp),
+	(2, 'orange', 150, current_timestamp, current_timestamp),
+	(3, 'grape' , 200, current_timestamp, current_timestamp);
+
+insert into account(name, item_id, item_count, create_at, update_at) values
+	('tanaka', 1, 10, current_timestamp, current_timestamp).
+	('satou', 2, 30, current_timestamp, current_timestamp),
+	('inoue', 3, 4, current_timestamp, current_timestamp),
+	('iizuka', 4, 21, current_timestamp, current_timestamp);

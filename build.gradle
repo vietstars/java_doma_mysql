@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+version = '2.25.0-SNAPSHOT'
+ext.dependentVersion = '2.24.0'
+
+task copyDomaResources(type: Sync)  {
+    from sourceSets.main.resources.srcDirs
+    into compileJava.destinationDir
+    include 'doma.compile.config'
+    include 'META-INF/**/*.sql'
+    include 'META-INF/**/*.script'
+}
+
+compileJava {
+    dependsOn copyDomaResources
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+    options.compilerArgs = ['-proc:none']
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+dependencies {
+    runtime "mysql:mysql-connector-java:+"
+    runtime "org.springframework:spring-jdbc:+"
+    annotationProcessor "org.seasar.doma:doma:${dependentVersion}"
+    implementation "org.seasar.doma:doma:${dependentVersion}"
+    testImplementation 'junit:junit:4.11'
+}
+
+apply from:'eclipse.gradle'
+
+apply plugin: 'idea'
+idea.module.inheritOutputDirs = true
+
+mainClassName = 'ben.entity.Sample'
